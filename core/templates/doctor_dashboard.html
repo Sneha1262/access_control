@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Doctor Dashboard</title>
+  <style>
+    body { font-family: Arial, sans-serif; background:#f4f4f4; padding:40px; }
+    .container { background:#fff; padding:30px; border-radius:8px; box-shadow:0 0 10px rgba(0,0,0,.1); }
+    .alert { padding:10px; border-radius:5px; margin-bottom:10px; }
+    .alert-success { background:#d4edda; color:#155724; }
+    ul { list-style:none; padding-left:0; }
+    li { margin-bottom:10px; }
+    button { padding:5px 10px; border:none; background:#007bff; color:#fff; border-radius:4px; cursor:pointer; }
+    button:hover { background:#0056b3; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+        {{ message }}
+      </div>
+    {% endfor %}
+  {% endif %}
+
+  {% if doctor %}
+    <h1>Welcome, {{ doctor.name }}</h1>
+    <p><strong>Wallet Address:</strong> {{ doctor.wallet_address }}</p>
+    <p><strong>Credit Level:</strong> {{ doctor.credit_level }}</p>
+  {% else %}
+    <h1>Welcome</h1>
+    
+  {% endif %}
+
+  <h2>Patients List</h2>
+  <ul>
+    {% for patient in patients %}
+      <li>
+        {{ patient.given }} {{ patient.family }}
+        <form method="POST" action="{% url 'request_access' %}" style="display:inline;">
+          {% csrf_token %}
+          <input type="hidden" name="patient_id" value="{{ patient.synthea_id }}">
+          <button type="submit">Request Access</button>
+        </form>
+      </li>
+    {% empty %}
+      <li>No patients available.</li>
+    {% endfor %}
+  </ul>
+
+</div>
+</body>
+</html>
