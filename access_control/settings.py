@@ -132,4 +132,4 @@ CORS_ALLOWED_ORIGINS = [
     " http://127.0.0.1:8000/",  # example for frontend dev
 ]
 
-ALLOWED_HOSTS = ['44.218.129.24', 'localhost', 'http://127.0.0.1:8000/']
+ALLOWED_HOSTS = ['44.218.129.24:8000ch', 'localhost', 'http://127.0.0.1:8000/']
